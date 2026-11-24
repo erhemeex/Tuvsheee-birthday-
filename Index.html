@@ -1,0 +1,1324 @@
+```html
+<!DOCTYPE html>
+<html lang="mn" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Төрсөн өдрийн мэнд, Түвшинжаргал! 🎂✨</title>
+
+  <!-- Google Fonts supporting Mongolian Cyrillic cleanly -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bad+Script&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: "#FDF8F6",
+            blush: "#F9EFF4",
+            mauve: "#A65E7E",
+            mauveDark: "#8E4B69",
+            charcoal: "#33252C",
+            mutedText: "#7A6871",
+            softPink: "#F4DCE6",
+            cardBorder: "#EFE2E8",
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', "sans-serif"],
+            serif: ['"Cormorant Garamond"', "serif"],
+            hand: ['"Bad Script"', "cursive"],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      background: linear-gradient(180deg, #fdf8f6 0%, #f9eff4 45%, #fdf8f6 100%);
+      color: #33252c;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Floating subtle balloons & sparkles */
+    @keyframes floatSlow {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-16px) rotate(3deg);
+      }
+    }
+
+    @keyframes floatReverse {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(14px) rotate(-3deg);
+      }
+    }
+
+    @keyframes twinkle {
+      0%, 100% {
+        opacity: 0.45;
+        transform: scale(0.95);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.12);
+      }
+    }
+
+    .animate-float-slow {
+      animation: floatSlow 6s ease-in-out infinite;
+    }
+
+    .animate-float-reverse {
+      animation: floatReverse 7s ease-in-out infinite;
+    }
+
+    .animate-twinkle {
+      animation: twinkle 3.2s ease-in-out infinite;
+    }
+
+    /* Candle Flame Animation */
+    @keyframes flicker {
+      0%, 100% {
+        transform: scale(1) rotate(-1deg);
+        opacity: 0.96;
+      }
+      35% {
+        transform: scale(1.06, 0.94) rotate(2deg);
+        opacity: 1;
+      }
+      70% {
+        transform: scale(0.95, 1.05) rotate(-2deg);
+        opacity: 0.92;
+      }
+    }
+
+    .candle-flame {
+      transform-origin: bottom center;
+      animation: flicker 1.1s ease-in-out infinite;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .candle-flame.blown-out {
+      opacity: 0 !important;
+      transform: scale(0) !important;
+      animation: none;
+    }
+
+    /* Rising Smoke Puff after blowing candles */
+    @keyframes riseSmoke {
+      0% {
+        opacity: 0.85;
+        transform: translateY(0) scale(0.6);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-34px) scale(1.7);
+      }
+    }
+
+    .smoke-puff {
+      opacity: 0;
+    }
+
+    .smoke-puff.active {
+      animation: riseSmoke 1.6s ease-out forwards;
+    }
+
+    /* Infinite Marquee */
+    @keyframes marqueeScroll {
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeScroll 18s linear infinite;
+    }
+
+    /* 3D Flip Cards */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+
+    .flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      transform-style: preserve-3d;
+    }
+
+    .flip-card.flipped .flip-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-front,
+    .flip-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 1.25rem;
+    }
+
+    .flip-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Envelope Flap Animation */
+    .envelope-flap {
+      transform-origin: top center;
+      transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .envelope-open .envelope-flap {
+      transform: rotateX(180deg);
+      z-index: 0;
+    }
+
+    .letter-sheet {
+      transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-mauve/20 selection:text-mauveDark">
+  <!-- Main Mobile-First Container -->
+  <div class="relative max-w-md mx-auto min-h-screen bg-gradient-to-b from-[#FDF8F6] via-[#F9EFF4] to-[#FDF8F6] shadow-[0_0_50px_rgba(166,94,126,0.08)] overflow-hidden">
+
+    <!-- Decorative Floating Pastel Balloons -->
+    <div class="pointer-events-none select-none absolute top-44 -right-5 w-16 h-20 opacity-60 animate-float-slow z-0">
+      <svg viewBox="0 0 80 120" fill="none">
+        <ellipse cx="40" cy="42" rx="28" ry="34" fill="url(#balloonPink)" />
+        <path d="M40 76 L36 82 L44 82 Z" fill="#DFB2C7" />
+        <path d="M40 82 Q36 98 42 115" stroke="#DFB2C7" stroke-width="1.2" fill="none" />
+        <defs>
+          <linearGradient id="balloonPink" x1="15" y1="10" x2="65" y2="75" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#F6D5E4" />
+            <stop offset="1" stop-color="#D9A8C0" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <div class="pointer-events-none select-none absolute top-[540px] -left-6 w-16 h-20 opacity-55 animate-float-reverse z-0">
+      <svg viewBox="0 0 80 120" fill="none">
+        <ellipse cx="40" cy="42" rx="26" ry="32" fill="url(#balloonLavender)" />
+        <path d="M40 74 L36 80 L44 80 Z" fill="#C7B8E0" />
+        <path d="M40 80 Q44 96 38 112" stroke="#C7B8E0" stroke-width="1.2" fill="none" />
+        <defs>
+          <linearGradient id="balloonLavender" x1="15" y1="10" x2="65" y2="75" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#E4DCF5" />
+            <stop offset="1" stop-color="#C3B3DF" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <!-- 1. TOP NAVIGATION BAR -->
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-[#FDF8F6]/85 border-b border-cardBorder/70 px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-softPink flex items-center justify-center text-mauve shadow-xs">
+          <!-- Gift Box Icon -->
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 12 20 22 4 22 4 12"></polyline>
+            <rect x="2" y="7" width="20" height="5"></rect>
+            <line x1="12" y1="22" x2="12" y2="7"></line>
+            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+          </svg>
+        </div>
+        <span class="text-xs font-medium text-charcoal/85 tracking-tight">чамдаа зориулсан баяр</span>
+      </div>
+
+      <button
+        id="musicToggleBtn"
+        type="button"
+        class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/90 border border-cardBorder text-xs font-medium text-charcoal/80 hover:border-mauve/40 hover:text-mauve active:scale-95 transition shadow-2xs"
+      >
+        <span id="musicIconOff">
+          <svg class="w-3.5 h-3.5 text-mauve" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </span>
+        <span id="musicIconOn" class="hidden">
+          <svg class="w-3.5 h-3.5 text-mauve animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+          </svg>
+        </span>
+        <span id="musicLabel">Хөгжим асаах</span>
+      </button>
+    </header>
+
+    <!-- 2. HERO SECTION -->
+    <section class="relative px-5 pt-9 pb-8 text-center z-10">
+      <!-- Gold Sparkle Top-Left -->
+      <svg class="w-6 h-6 text-[#D8B47C] absolute top-7 left-6 animate-twinkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z" />
+      </svg>
+
+      <!-- Top Tag -->
+      <div class="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.18em] text-mutedText uppercase mb-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-mauve"></span>
+        <span>ӨНӨӨДӨР БОЛ ЧИНИЙ ӨДӨР</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-[31px] sm:text-[34px] leading-[1.2] font-bold tracking-tight text-charcoal">
+        Төрсөн өдрийн мэнд,
+        <span class="block text-mauve mt-1">Түвшинжаргал!</span>
+      </h1>
+
+      <!-- Age Display -->
+      <div class="mt-6 inline-flex items-center justify-center gap-4 text-left px-4 py-2">
+        <span class="text-[44px] leading-none font-semibold text-mauve/80 tracking-tight">24</span>
+        <div class="border-l border-mauve/20 pl-3.5">
+          <p class="text-[13px] font-semibold text-charcoal">нас хүрлээ!</p>
+          <p class="text-[12px] text-mutedText mt-0.5">Чамтай энэ дэлхий илүү гэрэлтэй.</p>
+        </div>
+      </div>
+
+      <!-- Subtitle -->
+      <p class="mt-4 text-[13px] leading-relaxed text-mutedText max-w-[310px] mx-auto">
+        Хамтдаа инээж, амьдралын мөч бүрийг өнгөлөг болгодог хамгийн сайн найздаа.
+      </p>
+
+      <!-- Primary CTA Button -->
+      <div class="mt-7">
+        <button
+          id="startCelebrationBtn"
+          type="button"
+          class="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-2xl bg-mauve hover:bg-mauveDark text-white font-semibold text-sm shadow-[0_10px_25px_rgba(166,94,126,0.32)] active:scale-95 transition cursor-pointer"
+        >
+          <!-- Sparkles Icon -->
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3z" />
+            <path d="M5 3v4" />
+            <path d="M3 5h4" />
+          </svg>
+          <span>Баяр эхлүүлэх</span>
+          <span class="text-base leading-none">↗</span>
+        </button>
+        <p class="mt-2.5 text-[11px] text-mutedText/85">
+          өнгөйн цацлага, хөгжим, бас дүүрэн хайр
+        </p>
+      </div>
+
+      <!-- Floating Tilted Wish Card -->
+      <div class="relative mt-9 mx-auto max-w-[340px]">
+        <div class="relative bg-white/95 backdrop-blur-md rounded-3xl border border-cardBorder p-5 shadow-[0_14px_35px_rgba(166,94,126,0.1)] -rotate-1 transition hover:rotate-0">
+          <!-- Card Header -->
+          <div class="flex items-center justify-between text-[10px] font-semibold tracking-[0.16em] text-mutedText uppercase mb-3">
+            <span>ХАЙРААР БҮТЭЭВ</span>
+            <svg class="w-4 h-4 text-mauve/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </div>
+
+          <!-- Mini Cake Preview Illustration inside Card -->
+          <div class="w-32 mx-auto my-2">
+            <svg viewBox="0 0 180 120" class="w-full h-auto" fill="none">
+              <!-- Candles -->
+              <rect x="48" y="26" width="5" height="28" rx="2.5" fill="#D8C4EC" />
+              <rect x="68" y="30" width="5" height="24" rx="2.5" fill="#F5D796" />
+              <rect x="88" y="24" width="5" height="30" rx="2.5" fill="#D8C4EC" />
+              <rect x="108" y="30" width="5" height="24" rx="2.5" fill="#F5D796" />
+              <rect x="128" y="26" width="5" height="28" rx="2.5" fill="#D8C4EC" />
+              <!-- Flames -->
+              <ellipse cx="50.5" cy="20" rx="3" ry="5" fill="#F6B64E" />
+              <ellipse cx="70.5" cy="24" rx="3" ry="5" fill="#F6B64E" />
+              <ellipse cx="90.5" cy="18" rx="3" ry="5" fill="#F6B64E" />
+              <ellipse cx="110.5" cy="24" rx="3" ry="5" fill="#F6B64E" />
+              <ellipse cx="130.5" cy="20" rx="3" ry="5" fill="#F6B64E" />
+              <!-- Cake Body -->
+              <rect x="32" y="54" width="116" height="50" rx="12" fill="#EFA1C1" />
+              <!-- White Drip Frosting -->
+              <path d="M32 62 Q32 54 44 54 H136 Q148 54 148 62 V68 Q142 75 136 68 Q130 62 124 69 Q118 78 112 69 Q106 62 100 68 Q94 76 88 68 Q82 62 76 70 Q70 79 64 70 Q58 62 52 68 Q46 75 40 68 Q35 63 32 68 Z" fill="#FFF8FA" />
+            </svg>
+          </div>
+
+          <!-- Cursive Card Title -->
+          <h2 class="font-hand text-[26px] text-mauve leading-snug mt-1">
+            Чамдаа шивнэсэн хүсэл
+          </h2>
+          <p class="text-xs text-mutedText mt-1">
+            Шинэ нас чинь хамгийн сайхан нь байг.
+          </p>
+
+          <!-- Pill Badge -->
+          <div class="mt-3.5 inline-block px-4 py-1.5 rounded-full bg-[#F5EDF1] border border-cardBorder text-[11px] font-medium text-mutedText">
+            24 нас чамд үнэхээр зохиж байна
+          </div>
+        </div>
+
+        <!-- Handwritten Arrow & Note Bottom-Left -->
+        <div class="relative flex items-start justify-between mt-3 px-2">
+          <div class="text-left -rotate-3">
+            <p class="font-hand text-[17px] text-mauve leading-tight">
+              хамаг сайхан бүхэн<br />чинийх байг
+            </p>
+          </div>
+
+          <!-- Hand-drawn Upward Arrow pointing to badge -->
+          <svg class="w-10 h-10 text-mauve/80 -mt-5 mr-16" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 42 Q24 24 30 10" />
+            <path d="M21 15 L30 9 L35 19" />
+          </svg>
+
+          <!-- Gold Starburst Right -->
+          <svg class="w-9 h-9 text-[#DFBE82] -mt-2" viewBox="0 0 40 40" fill="currentColor">
+            <path d="M20 2L22 15L32 6L24 17L38 18L24 21L33 32L22 23L20 38L18 23L7 32L16 21L2 18L16 17L8 6L18 15L20 2Z" opacity="0.85" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Scroll Down Prompt -->
+      <a href="#section-cake" class="mt-5 inline-flex items-center gap-1.5 text-[10px] font-semibold tracking-[0.16em] text-mutedText/80 uppercase hover:text-mauve transition">
+        <span>ДООШ ГҮЙЛГЭЭД ҮРГЭЛЖЛҮҮЛЭЭРЭЙ</span>
+        <span>↓</span>
+      </a>
+    </section>
+
+    <!-- MARQUEE / DIVIDER BAR -->
+    <div class="bg-[#F2E2EA] border-y border-mauve/15 py-2.5 overflow-hidden select-none">
+      <div class="marquee-track text-[11px] font-medium text-mauve/90 tracking-wide">
+        <div class="flex items-center gap-6 px-3">
+          <span>Нэг насаар нэмэгдлээ</span>
+          <span>✦</span>
+          <span>Улам л гялалзаж байна</span>
+          <span>✦✦✦</span>
+          <span>Төрсөн өдрийн мэнд, Түвшинжаргал</span>
+          <span>✦</span>
+          <span>24 насны баяр</span>
+          <span>✦✦✦</span>
+        </div>
+        <div class="flex items-center gap-6 px-3" aria-hidden="true">
+          <span>Нэг насаар нэмэгдлээ</span>
+          <span>✦</span>
+          <span>Улам л гялалзаж байна</span>
+          <span>✦✦✦</span>
+          <span>Төрсөн өдрийн мэнд, Түвшинжаргал</span>
+          <span>✦</span>
+          <span>24 насны баяр</span>
+          <span>✦✦✦</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. SECTION 01 — INTERACTIVE BIRTHDAY CAKE -->
+    <section id="section-cake" class="px-5 py-14 text-center relative">
+      <p class="text-[10px] font-semibold tracking-[0.18em] text-mutedText uppercase">
+        01 / ТӨРСӨН ӨДРИЙН БЯЦХАН ИД ШИД
+      </p>
+
+      <h2 class="mt-3 text-[28px] font-bold text-charcoal leading-tight">
+        Нүдээ аниад...
+        <span class="block font-serif italic font-semibold text-[32px] text-mauve mt-0.5">
+          Хүслээ шивнээрэй.
+        </span>
+      </h2>
+
+      <p class="mt-3 text-[13px] leading-relaxed text-mutedText max-w-[310px] mx-auto">
+        Сэтгэлдээ тээж явдаг хүслээ бодоод лаагаа үлээгээрэй. Хүсэл чинь биелээсэй гэж би ч бас хүсэж байна.
+      </p>
+
+      <!-- Blow Candles Button -->
+      <div class="mt-6">
+        <button
+          id="blowCandlesBtn"
+          type="button"
+          class="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-mauve hover:bg-mauveDark text-white font-semibold text-[13px] shadow-[0_8px_22px_rgba(166,94,126,0.28)] active:scale-95 transition cursor-pointer"
+        >
+          <!-- Wind Icon -->
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2" />
+            <path d="M9.6 4.6A2 2 0 1 1 11 8H2" />
+            <path d="M12.6 19.4A2 2 0 1 0 14 16H2" />
+          </svg>
+          <span id="blowBtnText">Хүслээ шивнээд лаа үлээх</span>
+        </button>
+      </div>
+
+      <!-- Illustrated SVG Birthday Cake -->
+      <div class="mt-8 max-w-[310px] mx-auto relative">
+        <svg viewBox="0 0 320 270" class="w-full h-auto drop-shadow-[0_14px_24px_rgba(166,94,126,0.12)]" fill="none">
+          <!-- Sparkles around cake -->
+          <path class="animate-twinkle" d="M52 145 L55 153 L63 156 L55 159 L52 167 L49 159 L41 156 L49 153 Z" stroke="#D8B47C" stroke-width="1.5" fill="none" />
+          <path class="animate-twinkle" d="M244 92 L247 100 L255 103 L247 106 L244 114 L241 106 L233 103 L241 100 Z" stroke="#D8B47C" stroke-width="1.5" fill="none" />
+          <path d="M266 135 L268 140 L273 142 L268 144 L266 149 L264 144 L259 142 L264 140 Z" fill="#D8B47C" />
+
+          <!-- Cake Plate -->
+          <ellipse cx="160" cy="236" rx="122" ry="15" fill="#EBE0E6" />
+          <ellipse cx="160" cy="233" rx="116" ry="12" fill="#F8F1F5" />
+
+          <!-- Cake Base -->
+          <rect x="68" y="138" width="184" height="94" rx="16" fill="url(#cakePinkGrad)" />
+
+          <!-- Vertical Subtle Stripes on Cake -->
+          <line x1="100" y1="168" x2="100" y2="218" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="3" stroke-linecap="round" />
+          <line x1="126" y1="168" x2="126" y2="218" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="3" stroke-linecap="round" />
+          <line x1="194" y1="168" x2="194" y2="218" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="3" stroke-linecap="round" />
+          <line x1="220" y1="168" x2="220" y2="218" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="3" stroke-linecap="round" />
+
+          <!-- Bottom Pearl Dots -->
+          <g fill="#F8DCE7">
+            <circle cx="78" cy="227" r="5" />
+            <circle cx="92" cy="228" r="5" />
+            <circle cx="106" cy="229" r="5" />
+            <circle cx="120" cy="229" r="5" />
+            <circle cx="134" cy="230" r="5" />
+            <circle cx="148" cy="230" r="5" />
+            <circle cx="162" cy="230" r="5" />
+            <circle cx="176" cy="230" r="5" />
+            <circle cx="190" cy="229" r="5" />
+            <circle cx="204" cy="229" r="5" />
+            <circle cx="218" cy="228" r="5" />
+            <circle cx="232" cy="227" r="5" />
+            <circle cx="244" cy="226" r="4.5" />
+          </g>
+
+          <!-- White Cream Top & Drips -->
+          <ellipse cx="160" cy="138" rx="92" ry="12" fill="#FFF7FA" />
+          <path
+            d="M68 138 H252 V154 C252 162 242 162 242 154 C242 148 232 148 232 158 C232 168 220 168 220 156 C220 148 208 148 208 155 C208 163 196 163 196 154 C196 147 182 147 182 160 C182 172 168 172 168 156 C168 148 154 148 154 155 C154 164 142 164 142 154 C142 147 128 147 128 162 C128 175 114 175 114 158 C114 148 100 148 100 156 C100 164 88 164 88 154 C88 148 78 148 78 158 C78 167 68 167 68 156 Z"
+            fill="#FFF7FA"
+          />
+
+          <!-- Center Heart Outline on Cake -->
+          <path
+            d="M160 202 C160 202 144 191 144 181 C144 175.5 148.5 172 153.5 172 C156.8 172 159.2 173.8 160 176 C160.8 173.8 163.2 172 166.5 172 C171.5 172 176 175.5 176 181 C176 191 160 202 160 202 Z"
+            stroke="#FFF7FA"
+            stroke-width="2"
+            fill="none"
+          />
+
+          <!-- 5 Striped Candles (Purple & Gold alternating) -->
+          <!-- Candle 1 (Purple) -->
+          <g>
+            <rect x="96" y="84" width="8" height="54" rx="4" fill="#EFE8F9" />
+            <path d="M96 94 L104 90 M96 105 L104 101 M96 116 L104 112 M96 127 L104 123" stroke="#C5B0E4" stroke-width="3" />
+            <line x1="100" y1="79" x2="100" y2="84" stroke="#7A6871" stroke-width="1.5" />
+            <g class="candle-flame">
+              <ellipse cx="100" cy="70" rx="6" ry="10" fill="#F8C46C" fill-opacity="0.35" />
+              <path d="M100 61 C104 67 104 75 100 77 C96 75 96 67 100 61 Z" fill="#F5A638" />
+              <path d="M100 66 C102 70 102 74 100 75.5 C98 74 98 70 100 66 Z" fill="#FFF3C4" />
+            </g>
+            <circle class="smoke-puff" cx="100" cy="72" r="4" fill="#CFC4CA" />
+          </g>
+
+          <!-- Candle 2 (Gold) -->
+          <g>
+            <rect x="125" y="92" width="8" height="46" rx="4" fill="#FDF3DC" />
+            <path d="M125 101 L133 97 M125 112 L133 108 M125 123 L133 119 M125 133 L133 129" stroke="#E9C26B" stroke-width="3" />
+            <line x1="129" y1="87" x2="129" y2="92" stroke="#7A6871" stroke-width="1.5" />
+            <g class="candle-flame" style="animation-delay: 0.2s;">
+              <ellipse cx="129" cy="78" rx="6" ry="10" fill="#F8C46C" fill-opacity="0.35" />
+              <path d="M129 69 C133 75 133 83 129 85 C125 83 125 75 129 69 Z" fill="#F5A638" />
+              <path d="M129 74 C131 78 131 82 129 83.5 C127 82 127 78 129 74 Z" fill="#FFF3C4" />
+            </g>
+            <circle class="smoke-puff" cx="129" cy="80" r="4" fill="#CFC4CA" />
+          </g>
+
+          <!-- Candle 3 (Purple Center) -->
+          <g>
+            <rect x="156" y="82" width="8" height="56" rx="4" fill="#EFE8F9" />
+            <path d="M156 92 L164 88 M156 103 L164 99 M156 114 L164 110 M156 125 L164 121" stroke="#C5B0E4" stroke-width="3" />
+            <line x1="160" y1="77" x2="160" y2="82" stroke="#7A6871" stroke-width="1.5" />
+            <g class="candle-flame" style="animation-delay: 0.4s;">
+              <ellipse cx="160" cy="68" rx="6" ry="10" fill="#F8C46C" fill-opacity="0.35" />
+              <path d="M160 59 C164 65 164 73 160 75 C156 73 156 65 160 59 Z" fill="#F5A638" />
+              <path d="M160 64 C162 68 162 72 160 73.5 C158 72 158 68 160 64 Z" fill="#FFF3C4" />
+            </g>
+            <circle class="smoke-puff" cx="160" cy="70" r="4" fill="#CFC4CA" />
+          </g>
+
+          <!-- Candle 4 (Gold) -->
+          <g>
+            <rect x="187" y="92" width="8" height="46" rx="4" fill="#FDF3DC" />
+            <path d="M187 101 L195 97 M187 112 L195 108 M187 123 L195 119 M187 133 L195 129" stroke="#E9C26B" stroke-width="3" />
+            <line x1="191" y1="87" x2="191" y2="92" stroke="#7A6871" stroke-width="1.5" />
+            <g class="candle-flame" style="animation-delay: 0.15s;">
+              <ellipse cx="191" cy="78" rx="6" ry="10" fill="#F8C46C" fill-opacity="0.35" />
+              <path d="M191 69 C195 75 195 83 191 85 C187 83 187 75 191 69 Z" fill="#F5A638" />
+              <path d="M191 74 C193 78 193 82 191 83.5 C189 82 189 78 191 74 Z" fill="#FFF3C4" />
+            </g>
+            <circle class="smoke-puff" cx="191" cy="80" r="4" fill="#CFC4CA" />
+          </g>
+
+          <!-- Candle 5 (Purple) -->
+          <g>
+            <rect x="216" y="84" width="8" height="54" rx="4" fill="#EFE8F9" />
+            <path d="M216 94 L224 90 M216 105 L224 101 M216 116 L224 112 M216 127 L224 123" stroke="#C5B0E4" stroke-width="3" />
+            <line x1="220" y1="79" x2="220" y2="84" stroke="#7A6871" stroke-width="1.5" />
+            <g class="candle-flame" style="animation-delay: 0.35s;">
+              <ellipse cx="220" cy="70" rx="6" ry="10" fill="#F8C46C" fill-opacity="0.35" />
+              <path d="M220 61 C224 67 224 75 220 77 C216 75 216 67 220 61 Z" fill="#F5A638" />
+              <path d="M220 66 C222 70 222 74 220 75.5 C218 74 218 70 220 66 Z" fill="#FFF3C4" />
+            </g>
+            <circle class="smoke-puff" cx="220" cy="72" r="4" fill="#CFC4CA" />
+          </g>
+
+          <defs>
+            <linearGradient id="cakePinkGrad" x1="68" y1="138" x2="252" y2="232" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#F2A3C4" />
+              <stop offset="1" stop-color="#E284AE" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <!-- Secret Wish Reveal Card (Hidden until candles are blown out) -->
+        <div
+          id="secretWishBox"
+          class="hidden mt-4 p-5 rounded-3xl bg-white/95 border border-mauve/25 shadow-[0_12px_30px_rgba(166,94,126,0.16)] transition-all"
+        >
+          <div class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-mauve uppercase tracking-wider mb-1.5">
+            <span>✨ Хүсэл шивнэгдлээ ✨</span>
+          </div>
+          <p class="text-[13.5px] leading-relaxed text-charcoal font-medium">
+            Хүсэл чинь заавал биелнэ ээ, <span class="text-mauve font-semibold">Түвшинжаргал</span>! 24 насны чинь өдөр бүр аз жаргалаар дүүрэн байг ✨
+          </p>
+          <button
+            id="relightBtn"
+            type="button"
+            class="mt-3 text-[11px] font-semibold text-mutedText hover:text-mauve underline underline-offset-4 cursor-pointer"
+          >
+            Лааг дахин асаах
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="border-t border-cardBorder/80 mx-6"></div>
+
+    <!-- 4. SECTION 02 — MEMORY POLAROID GALLERY -->
+    <section class="px-5 py-14 text-center">
+      <p class="text-[10px] font-semibold tracking-[0.18em] text-mutedText uppercase">
+        02 / НАНДИН ДУРСАМЖУУД
+      </p>
+
+      <h2 class="mt-3 text-[28px] font-bold text-charcoal leading-tight">
+        Бяцхан мөчүүд.
+        <span class="block font-serif italic font-semibold text-[32px] text-mauve mt-0.5">
+          Нандин дурсамжууд.
+        </span>
+      </h2>
+
+      <p class="mt-3 text-[13px] text-mutedText max-w-[300px] mx-auto">
+        Чамтай хамт авахуулсан зураг бүр нэг сайхан түүхтэй.
+      </p>
+
+      <!-- Hidden File Input for Uploading Custom Photos -->
+      <input type="file" id="polaroidFileInput" accept="image/*" class="hidden" />
+
+      <!-- 2x2 Grid of Tilted Polaroids -->
+      <div class="mt-9 grid grid-cols-2 gap-4">
+        <!-- Polaroid 1 -->
+        <div
+          data-slot="0"
+          class="polaroid-card group relative bg-white p-2.5 pb-4 rounded-xl shadow-[0_10px_25px_rgba(51,37,44,0.08)] border border-cardBorder/80 -rotate-2 hover:rotate-0 transition cursor-pointer"
+        >
+          <!-- Pastel Lavender Tape -->
+          <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 w-16 h-4 bg-[#E3D8F1]/85 -rotate-2 rounded-[2px] z-10"></div>
+
+          <div class="aspect-[4/4.3] w-full rounded-lg overflow-hidden bg-gradient-to-br from-[#F9E4EC] to-[#EFE1F5] flex flex-col items-center justify-center relative">
+            <img id="polaroidImg0" src="" alt="Бидний нандин дурсамж" class="hidden w-full h-full object-cover" />
+            <div id="polaroidPlaceholder0" class="flex flex-col items-center justify-center p-3 text-center">
+              <div class="w-10 h-10 rounded-full bg-white/80 flex items-center justify-center text-mauve mb-2 shadow-2xs">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                  <circle cx="12" cy="13" r="4" />
+                </svg>
+              </div>
+              <span class="text-[10px] font-medium text-mauve/85">Зургаа нэмэх</span>
+            </div>
+          </div>
+
+          <p class="font-hand text-[17px] text-mauve mt-3 leading-tight">
+            Бидний нандин дурсамж
+          </p>
+          <p class="text-[8px] font-semibold tracking-[0.14em] text-mutedText/70 uppercase mt-1.5">
+            01 — БИД ХОЁР, ҮРГЭЛЖ
+          </p>
+        </div>
+
+        <!-- Polaroid 2 -->
+        <div
+          data-slot="1"
+          class="polaroid-card group relative bg-white p-2.5 pb-4 rounded-xl shadow-[0_10px_25px_rgba(51,37,44,0.08)] border border-cardBorder/80 rotate-2 hover:rotate-0 transition cursor-pointer"
+        >
+          <!-- Pastel Lavender Tape -->
+          <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 w-16 h-4 bg-[#E3D8F1]/85 rotate-1 rounded-[2px] z-10"></div>
+
+          <div class="aspect-[4/4.3] w-full rounded-lg overflow-hidden bg-[#F5D6D8] flex flex-col items-center justify-center relative">
+            <img id="polaroidImg1" src="" alt="Хамтдаа инээсэн мөчүүд" class="hidden w-full h-full object-cover" />
+            <div id="polaroidPlaceholder1" class="flex flex-col items-center justify-center p-3 text-center">
+              <span class="text-xs font-medium text-charcoal/75 leading-snug mb-2">
+                Хамтдаа инээсэн мөчүүд
+              </span>
+              <span class="inline-flex items-center gap-1 text-[10px] text-mauve/85 bg-white/60 px-2.5 py-1 rounded-full">
+                📷 Зургаа нэмэх
+              </span>
+            </div>
+          </div>
+
+          <p class="font-hand text-[17px] text-mauve mt-3 leading-tight">
+            Хамтдаа инээсэн мөчүүд
+          </p>
+          <p class="text-[8px] font-semibold tracking-[0.14em] text-mutedText/70 uppercase mt-1.5">
+            02 — БИД ХОЁР, ҮРГЭЛЖ
+          </p>
+        </div>
+
+        <!-- Polaroid 3 -->
+        <div
+          data-slot="2"
+          class="polaroid-card group relative bg-white p-2.5 pb-4 rounded-xl shadow-[0_10px_25px_rgba(51,37,44,0.08)] border border-cardBorder/80 -rotate-1 hover:rotate-0 transition cursor-pointer"
+        >
+          <!-- Pastel Lavender Tape -->
+          <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 w-16 h-4 bg-[#E3D8F1]/85 -rotate-1 rounded-[2px] z-10"></div>
+
+          <div class="aspect-[4/4.3] w-full rounded-lg overflow-hidden bg-[#E1EBD9] flex flex-col items-center justify-center relative">
+            <img id="polaroidImg2" src="" alt="Бяцхан адал явдлууд" class="hidden w-full h-full object-cover" />
+            <div id="polaroidPlaceholder2" class="flex flex-col items-center justify-center p-3 text-center">
+              <span class="text-xs font-medium text-charcoal/75 leading-snug mb-2">
+                Бяцхан адал явдлууд
+              </span>
+              <span class="inline-flex items-center gap-1 text-[10px] text-charcoal/70 bg-white/65 px-2.5 py-1 rounded-full">
+                📷 Зургаа нэмэх
+              </span>
+            </div>
+          </div>
+
+          <p class="font-hand text-[17px] text-mauve mt-3 leading-tight">
+            Бяцхан адал явдлууд
+          </p>
+          <p class="text-[8px] font-semibold tracking-[0.14em] text-mutedText/70 uppercase mt-1.5">
+            03 — БИД ХОЁР, ҮРГЭЛЖ
+          </p>
+        </div>
+
+        <!-- Polaroid 4 -->
+        <div
+          data-slot="3"
+          class="polaroid-card group relative bg-white p-2.5 pb-4 rounded-xl shadow-[0_10px_25px_rgba(51,37,44,0.08)] border border-cardBorder/80 rotate-2 hover:rotate-0 transition cursor-pointer"
+        >
+          <!-- Pastel Lavender Tape -->
+          <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 w-16 h-4 bg-[#E3D8F1]/85 rotate-2 rounded-[2px] z-10"></div>
+
+          <div class="aspect-[4/4.3] w-full rounded-lg overflow-hidden bg-[#DDD6EC] flex flex-col items-center justify-center relative">
+            <img id="polaroidImg3" src="" alt="Дахиад олон ийм мөчүүд" class="hidden w-full h-full object-cover" />
+            <div id="polaroidPlaceholder3" class="flex flex-col items-center justify-center p-3 text-center">
+              <!-- Four-Leaf Flower Illustration -->
+              <svg class="w-12 h-12 text-white/90 mb-2" viewBox="0 0 60 60" fill="currentColor">
+                <path d="M30 28 C24 14 36 14 30 28 Z" />
+                <circle cx="26" cy="18" r="7" />
+                <circle cx="34" cy="18" r="7" />
+                <circle cx="42" cy="26" r="7" />
+                <circle cx="42" cy="34" r="7" />
+                <circle cx="34" cy="42" r="7" />
+                <circle cx="26" cy="42" r="7" />
+                <circle cx="18" cy="34" r="7" />
+                <circle cx="18" cy="26" r="7" />
+                <circle cx="30" cy="30" r="3" fill="#DDD6EC" />
+              </svg>
+              <span class="inline-flex items-center gap-1 text-[10px] font-medium text-charcoal/70">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                  <circle cx="12" cy="13" r="4" />
+                </svg>
+                Зургаа нэмэх
+              </span>
+            </div>
+          </div>
+
+          <p class="font-hand text-[17px] text-mauve mt-3 leading-tight">
+            Дахиад олон ийм мөчүүд
+          </p>
+          <p class="text-[8px] font-semibold tracking-[0.14em] text-mutedText/70 uppercase mt-1.5">
+            04 — БИД ХОЁР, ҮРГЭЛЖ
+          </p>
+        </div>
+      </div>
+
+      <p class="mt-6 text-[11px] text-mutedText/80">
+        Зураг дээр дараад өөрийн дурсамжийн зургаа оруулаарай
+      </p>
+    </section>
+
+    <!-- 5. SECTION 03 — 6 REASONS WHY YOU'RE MY BEST FRIEND -->
+    <section class="px-5 py-14 text-center bg-[#F6ECF2]/75 border-y border-cardBorder/80">
+      <p class="text-[10px] font-semibold tracking-[0.18em] text-mutedText uppercase">
+        03 / ЧАМД ДАХИН САНУУЛАХАД
+      </p>
+
+      <h2 class="mt-3 text-[26px] font-bold text-charcoal leading-snug">
+        Чи миний хамгийн сайн найз болох
+        <span class="block font-serif italic font-semibold text-[31px] text-mauve mt-0.5">
+          зургаан шалтгаан.
+        </span>
+      </h2>
+
+      <p class="mt-3 text-[12.5px] leading-relaxed text-mutedText max-w-[300px] mx-auto">
+        Карт дээр дараарай. Цаана нь чамд хэлэх үг нуугдаж байгаа.
+      </p>
+
+      <!-- 2x3 Interactive Flip Cards Grid -->
+      <div class="mt-8 grid grid-cols-2 gap-3.5 text-center">
+        <!-- Card 01 -->
+        <div class="flip-card perspective-1000 h-48 cursor-pointer" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <div class="flip-front bg-white/95 border border-cardBorder p-4 flex flex-col justify-between shadow-2xs">
+              <span class="text-left text-[10px] font-semibold text-mutedText/60">01</span>
+              <div class="flex flex-col items-center">
+                <!-- Sun Icon -->
+                <svg class="w-6 h-6 text-mauve/80 mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                </svg>
+                <h3 class="text-[13px] font-semibold text-charcoal leading-snug">
+                  Чиний гэгээлэг зан
+                </h3>
+              </div>
+              <span class="text-[9px] font-semibold tracking-[0.12em] text-mutedText/70 uppercase">
+                ДАРААД УНШААРАЙ ↗
+              </span>
+            </div>
+            <div class="flip-back bg-mauve text-white p-4 flex flex-col justify-center items-center shadow-md">
+              <p class="text-[12px] leading-relaxed font-medium">
+                Хэцүү үед ч инээмсэглэл бэлэглэж, эргэн тойрноо дулаацуулж чаддаг гайхалтай хүн.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 02 -->
+        <div class="flip-card perspective-1000 h-48 cursor-pointer" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <div class="flip-front bg-white/95 border border-cardBorder p-4 flex flex-col justify-between shadow-2xs">
+              <span class="text-left text-[10px] font-semibold text-mutedText/60">02</span>
+              <div class="flex flex-col items-center">
+                <!-- Smiley Icon -->
+                <svg class="w-6 h-6 text-mauve/80 mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                  <line x1="9" y1="9" x2="9.01" y2="9" />
+                  <line x1="15" y1="9" x2="15.01" y2="9" />
+                </svg>
+                <h3 class="text-[13px] font-semibold text-charcoal leading-snug">
+                  Чиний цоглог инээд
+                </h3>
+              </div>
+              <span class="text-[9px] font-semibold tracking-[0.12em] text-mutedText/70 uppercase">
+                ДАРААД УНШААРАЙ ↗
+              </span>
+            </div>
+            <div class="flip-back bg-mauve text-white p-4 flex flex-col justify-center items-center shadow-md">
+              <p class="text-[12px] leading-relaxed font-medium">
+                Чамтай хамт байхад уйдах зав огт гардаггүй, хамгийн энгийн мөч ч инээд хөөрөөр дүүрдэг.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 03 -->
+        <div class="flip-card perspective-1000 h-48 cursor-pointer" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <div class="flip-front bg-white/95 border border-cardBorder p-4 flex flex-col justify-between shadow-2xs">
+              <span class="text-left text-[10px] font-semibold text-mutedText/60">03</span>
+              <div class="flex flex-col items-center">
+                <!-- Heart Icon -->
+                <svg class="w-6 h-6 text-mauve/80 mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
+                <h3 class="text-[13px] font-semibold text-charcoal leading-snug">
+                  Чиний сайхан сэтгэл
+                </h3>
+              </div>
+              <span class="text-[9px] font-semibold tracking-[0.12em] text-mutedText/70 uppercase">
+                ДАРААД УНШААРАЙ ↗
+              </span>
+            </div>
+            <div class="flip-back bg-mauve text-white p-4 flex flex-col justify-center items-center shadow-md">
+              <p class="text-[12px] leading-relaxed font-medium">
+                Хэзээ ч туслахад бэлэн, чин сэтгэлээсээ сонсож ойлгодог хамгийн түшигтэй найз.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 04 -->
+        <div class="flip-card perspective-1000 h-48 cursor-pointer" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <div class="flip-front bg-white/95 border border-cardBorder p-4 flex flex-col justify-between shadow-2xs">
+              <span class="text-left text-[10px] font-semibold text-mutedText/60">04</span>
+              <div class="flex flex-col items-center">
+                <!-- Star Icon -->
+                <svg class="w-6 h-6 text-mauve/80 mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg>
+                <h3 class="text-[13px] font-semibold text-charcoal leading-snug">
+                  Өөрийнхөөрөө байдаг чи
+                </h3>
+              </div>
+              <span class="text-[9px] font-semibold tracking-[0.12em] text-mutedText/70 uppercase">
+                ДАРААД УНШААРАЙ ↗
+              </span>
+            </div>
+            <div class="flip-back bg-mauve text-white p-4 flex flex-col justify-center items-center shadow-md">
+              <p class="text-[12px] leading-relaxed font-medium">
+                Хэний ч өмнө дүр эсгэлгүй, яг байгаагаараа гэрэлтдэг чинь хамгийн гоё чанар.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 05 -->
+        <div class="flip-card perspective-1000 h-48 cursor-pointer" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <div class="flip-front bg-white/95 border border-cardBorder p-4 flex flex-col justify-between shadow-2xs">
+              <span class="text-left text-[10px] font-semibold text-mutedText/60">05</span>
+              <div class="flex flex-col items-center">
+                <!-- Music Note Icon -->
+                <svg class="w-6 h-6 text-mauve/80 mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 18V5l12-2v13" />
+                  <circle cx="6" cy="18" r="3" />
+                  <circle cx="18" cy="16" r="3" />
+                </svg>
+                <h3 class="text-[13px] font-semibold text-charcoal leading-snug">
+                  Бидний хөгжилтэй солиорол
+                </h3>
+              </div>
+              <span class="text-[9px] font-semibold tracking-[0.12em] text-mutedText/70 uppercase">
+                ДАРААД УНШААРАЙ ↗
+              </span>
+            </div>
+            <div class="flip-back bg-mauve text-white p-4 flex flex-col justify-center items-center shadow-md">
+              <p class="text-[12px] leading-relaxed font-medium">
+                Зөвхөн бид хоёрын л ойлгох наргиа, мартагдашгүй дурсамжууд үргэлж сэтгэлд тод байдаг.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 06 -->
+        <div class="flip-card perspective-1000 h-48 cursor-pointer" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <div class="flip-front bg-white/95 border border-cardBorder p-4 flex flex-col justify-between shadow-2xs">
+              <span class="text-left text-[10px] font-semibold text-mutedText/60">06</span>
+              <div class="flex flex-col items-center">
+                <!-- Gift Icon -->
+                <svg class="w-6 h-6 text-mauve/80 mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 12 20 22 4 22 4 12" />
+                  <rect x="2" y="7" width="20" height="5" />
+                  <line x1="12" y1="22" x2="12" y2="7" />
+                  <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+                  <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+                </svg>
+                <h3 class="text-[13px] font-semibold text-charcoal leading-snug">
+                  Хамгийн сайн найз минь
+                </h3>
+              </div>
+              <span class="text-[9px] font-semibold tracking-[0.12em] text-mutedText/70 uppercase">
+                ДАРААД УНШААРАЙ ↗
+              </span>
+            </div>
+            <div class="flip-back bg-mauve text-white p-4 flex flex-col justify-center items-center shadow-md">
+              <p class="text-[12px] leading-relaxed font-medium">
+                Амьдралын минь нэг чухал хэсэг болж, үргэлж дэргэд минь байдагт баярлалаа!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. SECTION 04 — PERSONAL BIRTHDAY LETTER -->
+    <section class="px-5 pt-14 pb-20 text-center">
+      <p class="text-[10px] font-semibold tracking-[0.18em] text-mutedText uppercase">
+        04 / ЧИН СЭТГЭЛЭЭСЭЭ
+      </p>
+
+      <h2 class="mt-3 text-[28px] font-bold text-charcoal leading-tight">
+        Бяцхан захидал,
+        <span class="block font-serif italic font-semibold text-[32px] text-mauve mt-0.5">
+          зөвхөн чамдаа.
+        </span>
+      </h2>
+
+      <p class="mt-2.5 text-[13px] text-mutedText">
+        Сэтгэлийн үгийг захидлаар хүргэе.
+      </p>
+
+      <!-- Interactive Pink Envelope -->
+      <div class="mt-8 max-w-[340px] mx-auto">
+        <div
+          id="envelopeContainer"
+          class="relative w-full h-52 rounded-2xl bg-[#EED3E0] border border-[#E2BDD0] shadow-[0_14px_32px_rgba(166,94,126,0.14)] overflow-hidden cursor-pointer select-none transition-all duration-500"
+        >
+          <!-- Envelope Bottom Pocket -->
+          <svg viewBox="0 0 340 208" class="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
+            <polygon points="0,208 170,96 340,208" fill="#E8C7D7" />
+            <polygon points="0,0 140,104 0,208" fill="#ECCDD9" opacity="0.65" />
+            <polygon points="340,0 200,104 340,208" fill="#ECCDD9" opacity="0.65" />
+          </svg>
+
+          <!-- Envelope Top Flap -->
+          <div class="envelope-flap absolute top-0 left-0 w-full h-28 z-20 pointer-events-none">
+            <svg viewBox="0 0 340 112" class="w-full h-full" preserveAspectRatio="none">
+              <polygon points="0,0 340,0 170,112" fill="#F4DFEA" />
+            </svg>
+          </div>
+
+          <!-- Wax Seal Heart Button in Center -->
+          <div id="waxSeal" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 flex flex-col items-center">
+            <div class="w-12 h-12 rounded-full bg-mauve shadow-[0_6px_16px_rgba(166,94,126,0.35)] flex items-center justify-center text-white transition-transform hover:scale-110">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Cursive Label on Envelope -->
+          <p id="envelopeTitle" class="absolute bottom-4 inset-x-0 text-center font-hand text-[20px] text-mauve z-30">
+            Түвшинжаргалдаа, хайраар
+          </p>
+        </div>
+
+        <!-- Prompt below envelope -->
+        <p id="envelopeHint" class="mt-3 font-hand text-[17px] text-mauve/85 cursor-pointer">
+          дараад нээгээрэй ⌄
+        </p>
+
+        <!-- Opened Warm Cream Letter Sheet -->
+        <div
+          id="openedLetterCard"
+          class="hidden mt-5 text-left bg-[#FFFDFB] border border-cardBorder rounded-3xl p-6 shadow-[0_16px_40px_rgba(166,94,126,0.14)] relative"
+        >
+          <div class="flex items-center justify-between border-b border-cardBorder pb-3 mb-4">
+            <span class="font-hand text-[21px] text-mauve">Хайрт Түвшинжаргалдаа,</span>
+            <button
+              id="editLetterBtn"
+              type="button"
+              class="text-[11px] font-medium text-mutedText hover:text-mauve underline underline-offset-4 cursor-pointer"
+            >
+              Үг засах
+            </button>
+          </div>
+
+          <p id="letterBodyText" class="text-[13.5px] leading-[1.8] text-charcoal/90 whitespace-pre-line">
+24 насны төрсөн өдрийн халуун мэндийг хүргэе! 🎂✨
+
+Амьдралын минь хамгийн гэгээлэг, инээд хөөрөөр дүүрэн мөч бүрд дэргэд минь байж, үргэлж урам зориг өгдөгт чинь маш их баярладаг шүү. 
+
+Шинэ нас чинь чамд хамгийн сайхан боломжууд, эрүүл энх, хязгааргүй их аз жаргал, мөрөөдлийн чинь биелэлийг авчрах болтугай. Чи хамгийн сайн сайхан бүхнийг хүртэх эрхтэй хүн шүү!
+
+Үргэлж чиний талд зогсох хамгийн сайн найзаас нь 💖
+          </p>
+
+          <!-- Optional Inline Editor for Customizing Letter -->
+          <div id="letterEditorArea" class="hidden mt-3">
+            <textarea
+              id="letterTextarea"
+              rows="6"
+              class="w-full rounded-2xl border border-mauve/30 bg-cream p-3 text-[13px] text-charcoal focus:outline-none focus:border-mauve"
+            ></textarea>
+            <div class="mt-2 flex justify-end gap-2">
+              <button
+                id="cancelEditBtn"
+                type="button"
+                class="px-3.5 py-1.5 rounded-xl text-xs text-mutedText hover:bg-blush cursor-pointer"
+              >
+                Болих
+              </button>
+              <button
+                id="saveLetterBtn"
+                type="button"
+                class="px-4 py-1.5 rounded-xl text-xs font-semibold bg-mauve text-white hover:bg-mauveDark cursor-pointer"
+              >
+                Хадгалах
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-5 pt-3 border-t border-cardBorder/70 flex items-center justify-between text-xs text-mutedText">
+            <span class="font-hand text-[18px] text-mauve">Төрсөн өдрийн мэнд!</span>
+            <button
+              id="closeLetterBtn"
+              type="button"
+              class="text-[11px] font-medium text-mutedText hover:text-mauve cursor-pointer"
+            >
+              Дугтуйг хаах ↑
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Interactive JavaScript -->
+  <script>
+    // 1. Confetti Helper
+    function fireCelebrationConfetti() {
+      if (typeof confetti === "function") {
+        confetti({
+          particleCount: 75,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ["#A65E7E", "#F4A4C0", "#E5C17B", "#C5B0E4", "#FFF5F8"],
+        });
+      }
+    }
+
+    // 2. Web Audio API Gentle Happy Birthday Melody Synthesizer
+    let audioCtx = null;
+    let isPlayingMusic = false;
+    let melodyTimeout = null;
+
+    const birthdayNotes = [
+      { freq: 261.63, dur: 0.35 }, // C4
+      { freq: 261.63, dur: 0.25 }, // C4
+      { freq: 293.66, dur: 0.6 },  // D4
+      { freq: 261.63, dur: 0.6 },  // C4
+      { freq: 349.23, dur: 0.6 },  // F4
+      { freq: 329.63, dur: 1.0 },  // E4
+
+      { freq: 261.63, dur: 0.35 }, // C4
+      { freq: 261.63, dur: 0.25 }, // C4
+      { freq: 293.66, dur: 0.6 },  // D4
+      { freq: 261.63, dur: 0.6 },  // C4
+      { freq: 392.00, dur: 0.6 },  // G4
+      { freq: 349.23, dur: 1.0 },  // F4
+
+      { freq: 261.63, dur: 0.35 }, // C4
+      { freq: 261.63, dur: 0.25 }, // C4
+      { freq: 523.25, dur: 0.6 },  // C5
+      { freq: 440.00, dur: 0.6 },  // A4
+      { freq: 349.23, dur: 0.6 },  // F4
+      { freq: 329.63, dur: 0.6 },  // E4
+      { freq: 293.66, dur: 1.0 },  // D4
+
+      { freq: 466.16, dur: 0.35 }, // Bb4
+      { freq: 466.16, dur: 0.25 }, // Bb4
+      { freq: 440.00, dur: 0.6 },  // A4
+      { freq: 349.23, dur: 0.6 },  // F4
+      { freq: 392.00, dur: 0.6 },  // G4
+      { freq: 349.23, dur: 1.1 },  // F4
+    ];
+
+    function playMelodyLoop(index = 0) {
+      if (!isPlayingMusic) return;
+
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+
+      const note = birthdayNotes[index % birthdayNotes.length];
+      const now = audioCtx.currentTime;
+
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      // Soft music-box sine + triangle blend
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(note.freq, now);
+
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.exponentialRampToValueAtTime(0.09, now + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.0008, now + note.dur * 0.95);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(now);
+      osc.stop(now + note.dur);
+
+      melodyTimeout = setTimeout(() => {
+        playMelodyLoop(index + 1);
+      }, note.dur * 1000 + 60);
+    }
+
+    function updateMusicUI() {
+      const label = document.getElementById("musicLabel");
+      const iconOff = document.getElementById("musicIconOff");
+      const iconOn = document.getElementById("musicIconOn");
+
+      if (isPlayingMusic) {
+        label.textContent = "Хөгжим унтраах";
+        iconOff.classList.add("hidden");
+        iconOn.classList.remove("hidden");
+      } else {
+        label.textContent = "Хөгжим асаах";
+        iconOn.classList.add("hidden");
+        iconOff.classList.remove("hidden");
+      }
+    }
+
+    function toggleMusic(forceState = null) {
+      isPlayingMusic = forceState !== null ? forceState : !isPlayingMusic;
+      updateMusicUI();
+
+      if (isPlayingMusic) {
+        clearTimeout(melodyTimeout);
+        playMelodyLoop(0);
+      } else {
+        clearTimeout(melodyTimeout);
+      }
+    }
+
+    document.getElementById("musicToggleBtn").addEventListener("click", () => {
+      toggleMusic();
+    });
+
+    // 3. Hero "Баяр эхлүүлэх" Button
+    document.getElementById("startCelebrationBtn").addEventListener("click", () => {
+      fireCelebrationConfetti();
+      if (!isPlayingMusic) {
+        toggleMusic(true);
+      }
+      document.getElementById("section-cake").scrollIntoView({ behavior: "smooth" });
+    });
+
+    // 4. Interactive Birthday Cake Blow Candles
+    const blowBtn = document.getElementById("blowCandlesBtn");
+    const blowBtnText = document.getElementById("blowBtnText");
+    const secretWishBox = document.getElementById("secretWishBox");
+    const flames = document.querySelectorAll(".candle-flame");
+    const smokes = document.querySelectorAll(".smoke-puff");
+    let candlesBlown = false;
+
+    blowBtn.addEventListener("click", () => {
+      if (candlesBlown) return;
+      candlesBlown = true;
+
+      flames.forEach((f) => f.classList.add("blown-out"));
+      smokes.forEach((s) => {
+        s.classList.remove("active");
+        void s.offsetWidth; // trigger reflow
+        s.classList.add("active");
+      });
+
+      blowBtnText.textContent = "Лаа унтарлаа ✨";
+      secretWishBox.classList.remove("hidden");
+      fireCelebrationConfetti();
+    });
+
+    document.getElementById("relightBtn").addEventListener("click", () => {
+      candlesBlown = false;
+      flames.forEach((f) => f.classList.remove("blown-out"));
+      smokes.forEach((s) => s.classList.remove("active"));
+      blowBtnText.textContent = "Хүслээ шивнээд лаа үлээх";
+      secretWishBox.classList.add("hidden");
+    });
+
+    // 5. Polaroid Photo Upload Customization
+    const fileInput = document.getElementById("polaroidFileInput");
+    let activeSlot = 0;
+
+    document.querySelectorAll(".polaroid-card").forEach((card) => {
+      card.addEventListener("click", () => {
+        activeSlot = card.getAttribute("data-slot");
+        fileInput.click();
+      });
+    });
+
+    fileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const imgEl = document.getElementById(`polaroidImg${activeSlot}`);
+        const placeholderEl = document.getElementById(`polaroidPlaceholder${activeSlot}`);
+        if (imgEl && placeholderEl) {
+          imgEl.src = event.target.result;
+          imgEl.classList.remove("hidden");
+          placeholderEl.classList.add("hidden");
+        }
+      };
+      reader.readAsDataURL(file);
+      fileInput.value = "";
+    });
+
+    // 6. Envelope Open & Letter Edit Interaction
+    const envelopeContainer = document.getElementById("envelopeContainer");
+    const envelopeHint = document.getElementById("envelopeHint");
+    const openedLetterCard = document.getElementById("openedLetterCard");
+    const closeLetterBtn = document.getElementById("closeLetterBtn");
+
+    function openEnvelope() {
+      envelopeContainer.classList.add("envelope-open");
+      openedLetterCard.classList.remove("hidden");
+      envelopeHint.classList.add("hidden");
+      fireCelebrationConfetti();
+    }
+
+    function closeEnvelope() {
+      envelopeContainer.classList.remove("envelope-open");
+      openedLetterCard.classList.add("hidden");
+      envelopeHint.classList.remove("hidden");
+    }
+
+    envelopeContainer.addEventListener("click", openEnvelope);
+    envelopeHint.addEventListener("click", openEnvelope);
+    closeLetterBtn.addEventListener("click", closeEnvelope);
+
+    // Letter Text Customization
+    const editLetterBtn = document.getElementById("editLetterBtn");
+    const letterBodyText = document.getElementById("letterBodyText");
+    const letterEditorArea = document.getElementById("letterEditorArea");
+    const letterTextarea = document.getElementById("letterTextarea");
+    const saveLetterBtn = document.getElementById("saveLetterBtn");
+    const cancelEditBtn = document.getElementById("cancelEditBtn");
+
+    editLetterBtn.addEventListener("click", () => {
+      letterTextarea.value = letterBodyText.textContent.trim();
+      letterBodyText.classList.add("hidden");
+      letterEditorArea.classList.remove("hidden");
+    });
+
+    cancelEditBtn.addEventListener("click", () => {
+      letterEditorArea.classList.add("hidden");
+      letterBodyText.classList.remove("hidden");
+    });
+
+    saveLetterBtn.addEventListener("click", () => {
+      const updated = letterTextarea.value.trim();
+      if (updated) {
+        letterBodyText.textContent = updated;
+      }
+      letterEditorArea.classList.add("hidden");
+      letterBodyText.classList.remove("hidden");
+    });
+  </script>
+</body>
+</html>
+```
